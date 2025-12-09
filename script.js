@@ -6,6 +6,9 @@ let score = 0;
 let highScore = 0;
 let isAnimating = false;
 
+// Audio context for sound effects
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
 // DOM Elements
 const loadingScreen = document.getElementById('loading');
 const errorScreen = document.getElementById('error');
@@ -163,11 +166,13 @@ async function revealPopulation(isCorrect) {
     nextPopulationEl.classList.remove('hidden');
     nextPopulationEl.classList.add('fade-in');
 
-    // Flash card color
+    // Flash card color and play sound
     if (isCorrect) {
         nextCard.classList.add('correct');
+        playCorrectSound();
     } else {
         nextCard.classList.add('incorrect');
+        playIncorrectSound();
     }
 
     // Wait for animation
@@ -248,6 +253,43 @@ function disableButtons() {
 // Utility function for delays
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// Sound Effects
+function playCorrectSound() {
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    // Pleasant ascending tone
+    oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
+    oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1); // E5
+
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.3);
+}
+
+function playIncorrectSound() {
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    // Descending tone for incorrect
+    oscillator.frequency.setValueAtTime(392.00, audioContext.currentTime); // G4
+    oscillator.frequency.setValueAtTime(261.63, audioContext.currentTime + 0.15); // C4
+
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
+
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.4);
 }
 
 // Event Listeners
