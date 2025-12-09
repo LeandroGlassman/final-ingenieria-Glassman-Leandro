@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Higher or Lower - Countries Population Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header with scores -->
+        <header>
+            <h1>Higher or Lower</h1>
+            <p class="subtitle">Countries Population Game</p>
+            <div class="scores">
+                <div class="score-box">
+                    <span class="score-label">Score:</span>
+                    <span id="current-score" class="score-value">0</span>
+                </div>
+                <div class="score-box">
+                    <span class="score-label">High Score:</span>
+                    <span id="high-score" class="score-value">0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Loading screen -->
+        <div id="loading" class="loading">
+            <div class="loading-spinner"></div>
+            <p>Loading countries...</p>
+        </div>
+
+        <!-- Error screen -->
+        <div id="error" class="error hidden">
+            <p class="error-message">Failed to load countries. Please check your connection.</p>
+            <button id="retry-btn" class="btn btn-primary">Retry</button>
+        </div>
+
+        <!-- Game area -->
+        <main id="game-area" class="game-area hidden">
+            <div class="cards-container">
+                <!-- Current country (left card) -->
+                <div class="card" id="current-card">
+                    <div class="flag-container">
+                        <img id="current-flag" src="" alt="Country flag" class="flag">
+                    </div>
+                    <h2 id="current-name" class="country-name">Country Name</h2>
+                    <div class="population-info">
+                        <p class="population-label">Population:</p>
+                        <p id="current-population" class="population-value">0</p>
+                    </div>
+                </div>
+
+                <!-- VS divider -->
+                <div class="vs-divider">
+                    <span>VS</span>
+                </div>
+
+                <!-- Next country (right card) -->
+                <div class="card" id="next-card">
+                    <div class="flag-container">
+                        <img id="next-flag" src="" alt="Country flag" class="flag">
+                    </div>
+                    <h2 id="next-name" class="country-name">Country Name</h2>
+                    <div class="population-info">
+                        <p class="population-label">Population:</p>
+                        <p id="next-population" class="population-value hidden">0</p>
+                        <p id="population-placeholder" class="population-placeholder">?</p>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="button-group">
+                        <button id="higher-btn" class="btn btn-higher">Higher</button>
+                        <button id="lower-btn" class="btn btn-lower">Lower</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Game Over Modal -->
+        <div id="game-over" class="modal hidden">
+            <div class="modal-content">
+                <h2>Game Over!</h2>
+                <div class="game-over-stats">
+                    <p class="final-score-label">Your Score:</p>
+                    <p id="final-score" class="final-score-value">0</p>
+                    <p id="new-high-score" class="new-high-score hidden">New High Score!</p>
+                    <p class="high-score-label">High Score: <span id="modal-high-score">0</span></p>
+                </div>
+                <button id="restart-btn" class="btn btn-primary">Play Again</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
