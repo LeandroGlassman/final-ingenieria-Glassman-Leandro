@@ -392,12 +392,13 @@ h1 {
 
     .subtitle {
         font-size: 0.8rem;
-        margin-bottom: 10px;
+        margin-bottom: 7px;
     }
 
     .scores {
-        margin-top: 10px;
+        margin-top: 7px;
         gap: 10px;
+        margin-bottom: 7px;
     }
 
     .score-box {
@@ -419,6 +420,7 @@ h1 {
         flex-direction: column;
         justify-content: center;
         overflow: hidden;
+        margin-top: -7px;
     }
 
     .cards-container {
@@ -504,11 +506,16 @@ h1 {
 
     .subtitle {
         font-size: 0.75rem;
-        margin-bottom: 8px;
+        margin-bottom: 5px;
     }
 
     .scores {
-        margin-top: 8px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .game-area {
+        margin-top: -5px;
     }
 
     .score-box {
