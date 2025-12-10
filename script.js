@@ -10,13 +10,13 @@ let isAnimating = false;
 let audioContext = null;
 
 // Initialize audio context on first user interaction
-function initAudioContext() {
+async function initAudioContext() {
     if (!audioContext) {
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        // Resume context if suspended (required for iOS/Safari)
-        if (audioContext.state === 'suspended') {
-            audioContext.resume();
-        }
+    }
+    // Resume context if suspended (required for iOS/Safari)
+    if (audioContext.state === 'suspended') {
+        await audioContext.resume();
     }
 }
 
@@ -267,13 +267,13 @@ function sleep(ms) {
 }
 
 // Sound Effects
-function playCorrectSound() {
+async function playCorrectSound() {
     if (!audioContext) return;
 
     try {
         // Resume audio context if suspended (iOS/Safari)
         if (audioContext.state === 'suspended') {
-            audioContext.resume();
+            await audioContext.resume();
         }
 
         const oscillator = audioContext.createOscillator();
@@ -296,13 +296,13 @@ function playCorrectSound() {
     }
 }
 
-function playIncorrectSound() {
+async function playIncorrectSound() {
     if (!audioContext) return;
 
     try {
         // Resume audio context if suspended (iOS/Safari)
         if (audioContext.state === 'suspended') {
-            audioContext.resume();
+            await audioContext.resume();
         }
 
         const oscillator = audioContext.createOscillator();
