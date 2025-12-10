@@ -392,13 +392,13 @@ h1 {
 
     .subtitle {
         font-size: 0.8rem;
-        margin-bottom: 7px;
+        margin-bottom: 5px;
     }
 
     .scores {
-        margin-top: 7px;
+        margin-top: 5px;
         gap: 10px;
-        margin-bottom: 7px;
+        margin-bottom: 2px;
     }
 
     .score-box {
@@ -420,13 +420,13 @@ h1 {
         flex-direction: column;
         justify-content: center;
         overflow: hidden;
-        margin-top: -7px;
+        margin-top: 2px;
     }
 
     .cards-container {
         flex-direction: column;
         gap: 10px;
-        justify-content: center;
+        justify-content: flex-start;
         flex: 1;
     }
 
@@ -506,16 +506,16 @@ h1 {
 
     .subtitle {
         font-size: 0.75rem;
-        margin-bottom: 5px;
+        margin-bottom: 4px;
     }
 
     .scores {
-        margin-top: 5px;
-        margin-bottom: 5px;
+        margin-top: 4px;
+        margin-bottom: 2px;
     }
 
     .game-area {
-        margin-top: -5px;
+        margin-top: 2px;
     }
 
     .score-box {
