@@ -13,6 +13,8 @@ body {
     align-items: center;
     justify-content: center;
     color: #333;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
 .container {
@@ -233,6 +235,10 @@ h1 {
     cursor: pointer;
     transition: all 0.2s ease;
     flex: 1;
+    min-height: 50px;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .btn:hover:not(:disabled) {
@@ -361,64 +367,219 @@ h1 {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    body {
+        height: 100svh;
+        overflow: hidden;
+    }
+
+    .container {
+        padding: 10px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    header {
+        margin-bottom: 0;
+        flex-shrink: 0;
+    }
+
     h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        margin-bottom: 4px;
+    }
+
+    .subtitle {
+        font-size: 0.8rem;
+        margin-bottom: 10px;
+    }
+
+    .scores {
+        margin-top: 10px;
+        gap: 10px;
+    }
+
+    .score-box {
+        padding: 8px 14px;
+        border-radius: 8px;
+    }
+
+    .score-label {
+        font-size: 0.8rem;
+    }
+
+    .score-value {
+        font-size: 1.2rem;
+    }
+
+    .game-area {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow: hidden;
     }
 
     .cards-container {
         flex-direction: column;
+        gap: 10px;
+        justify-content: center;
+        flex: 1;
     }
 
     .vs-divider {
         transform: rotate(90deg);
         padding: 0;
+        font-size: 1.2rem;
+        margin: 0;
     }
 
     .card {
         max-width: 100%;
+        width: 100%;
+        padding: 15px;
+        flex-shrink: 1;
+    }
+
+    .flag-container {
+        height: 120px;
+        margin-bottom: 12px;
     }
 
     .country-name {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+    }
+
+    .population-info {
+        margin: 10px 0;
+    }
+
+    .population-label {
+        font-size: 0.8rem;
+        margin-bottom: 4px;
     }
 
     .population-value {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
 
-    .scores {
-        flex-direction: column;
+    .population-placeholder {
+        font-size: 2rem;
+    }
+
+    .button-group {
+        margin-top: 12px;
         gap: 10px;
+        flex-direction: column;
     }
 
-    .score-box {
+    .btn {
+        padding: 14px 20px;
+        font-size: 1rem;
+        min-height: 50px;
         width: 100%;
+    }
+
+    .modal-content {
+        padding: 30px 20px;
+        width: 95%;
+    }
+
+    .modal-content h2 {
+        font-size: 2rem;
     }
 }
 
 @media (max-width: 480px) {
     .container {
-        padding: 10px;
+        padding: 8px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+        margin-bottom: 3px;
+    }
+
+    .subtitle {
+        font-size: 0.75rem;
+        margin-bottom: 8px;
+    }
+
+    .scores {
+        margin-top: 8px;
+    }
+
+    .score-box {
+        padding: 6px 12px;
+    }
+
+    .score-label {
+        font-size: 0.75rem;
+    }
+
+    .score-value {
+        font-size: 1.1rem;
     }
 
     .card {
-        padding: 20px;
+        padding: 12px;
     }
 
     .flag-container {
-        height: 150px;
+        height: 100px;
+        margin-bottom: 10px;
     }
 
     .country-name {
         font-size: 1.2rem;
+        margin-bottom: 8px;
+    }
+
+    .population-info {
+        margin: 8px 0;
+    }
+
+    .population-label {
+        font-size: 0.75rem;
+        margin-bottom: 3px;
+    }
+
+    .population-value {
+        font-size: 1.3rem;
+    }
+
+    .population-placeholder {
+        font-size: 1.8rem;
+    }
+
+    .button-group {
+        margin-top: 10px;
+        gap: 8px;
     }
 
     .btn {
-        padding: 12px 20px;
+        padding: 12px 16px;
+        font-size: 0.95rem;
+        min-height: 48px;
+    }
+
+    .vs-divider {
         font-size: 1rem;
+        margin: 0;
     }
 
     .final-score-value {
-        font-size: 3rem;
+        font-size: 2.5rem;
+    }
+
+    .modal-content {
+        padding: 25px 15px;
+    }
+
+    .modal-content h2 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
     }
 }

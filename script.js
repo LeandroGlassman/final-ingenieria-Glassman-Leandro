@@ -6,8 +6,19 @@ let score = 0;
 let highScore = 0;
 let isAnimating = false;
 
-// Audio context for sound effects
-const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+// Audio context for sound effects (initialized on first user interaction)
+let audioContext = null;
+
+// Initialize audio context on first user interaction
+function initAudioContext() {
+    if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        // Resume context if suspended (required for iOS/Safari)
+        if (audioContext.state === 'suspended') {
+            audioContext.resume();
+        }
+    }
+}
 
 // DOM Elements
 const loadingScreen = document.getElementById('loading');
@@ -257,50 +268,86 @@ function sleep(ms) {
 
 // Sound Effects
 function playCorrectSound() {
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
+    if (!audioContext) return;
 
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
+    try {
+        // Resume audio context if suspended (iOS/Safari)
+        if (audioContext.state === 'suspended') {
+            audioContext.resume();
+        }
 
-    // Pleasant ascending tone
-    oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
-    oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1); // E5
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
 
-    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
 
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + 0.3);
+        // Pleasant ascending tone
+        oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
+        oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1); // E5
+
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.3);
+    } catch (error) {
+        console.log('Sound playback failed:', error);
+    }
 }
 
 function playIncorrectSound() {
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
+    if (!audioContext) return;
 
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
+    try {
+        // Resume audio context if suspended (iOS/Safari)
+        if (audioContext.state === 'suspended') {
+            audioContext.resume();
+        }
 
-    // Descending tone for incorrect
-    oscillator.frequency.setValueAtTime(392.00, audioContext.currentTime); // G4
-    oscillator.frequency.setValueAtTime(261.63, audioContext.currentTime + 0.15); // C4
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
 
-    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
 
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + 0.4);
+        // Descending tone for incorrect
+        oscillator.frequency.setValueAtTime(392.00, audioContext.currentTime); // G4
+        oscillator.frequency.setValueAtTime(261.63, audioContext.currentTime + 0.15); // C4
+
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
+
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.4);
+    } catch (error) {
+        console.log('Sound playback failed:', error);
+    }
 }
 
 // Event Listeners
-higherBtn.addEventListener('click', () => handleGuess('higher'));
-lowerBtn.addEventListener('click', () => handleGuess('lower'));
-restartBtn.addEventListener('click', restartGame);
+higherBtn.addEventListener('click', () => {
+    initAudioContext();
+    handleGuess('higher');
+});
+lowerBtn.addEventListener('click', () => {
+    initAudioContext();
+    handleGuess('lower');
+});
+restartBtn.addEventListener('click', () => {
+    initAudioContext();
+    restartGame();
+});
 retryBtn.addEventListener('click', () => {
+    initAudioContext();
     errorScreen.classList.add('hidden');
     loadingScreen.classList.remove('hidden');
     initGame();
 });
+
+// Initialize audio on any touch/click (for mobile browsers)
+document.addEventListener('touchstart', initAudioContext, { once: true });
+document.addEventListener('click', initAudioContext, { once: true });
 
 // Initialize game on page load
 window.addEventListener('load', initGame);
